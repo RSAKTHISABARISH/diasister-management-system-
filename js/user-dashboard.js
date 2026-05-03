@@ -90,27 +90,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Location
+    function setLocation(lat, lng, name = "") {
+        if (document.getElementById('lat-display')) document.getElementById('lat-display').textContent = lat.toFixed(6);
+        if (document.getElementById('lng-display')) document.getElementById('lng-display').textContent = lng.toFixed(6);
+        if (document.getElementById('user-location')) {
+            document.getElementById('user-location').textContent = name || `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+        }
+
+        // Init mini map
+        if (window.initMap) {
+            window.initMap('mini-map', lat, lng, 15);
+            window.mainMap = window.initMap('main-map', lat, lng, 13);
+        }
+    }
+
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition((pos) => {
-            const lat = pos.coords.latitude;
-            const lng = pos.coords.longitude;
-            
-            if (document.getElementById('lat-display')) document.getElementById('lat-display').textContent = lat.toFixed(6);
-            if (document.getElementById('lng-display')) document.getElementById('lng-display').textContent = lng.toFixed(6);
-            if (document.getElementById('user-location')) document.getElementById('user-location').textContent = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
-
-            // Init mini map
-            if (window.initMap) {
-                window.initMap('mini-map', lat, lng, 15);
-                window.mainMap = window.initMap('main-map', lat, lng, 13);
-            }
+            setLocation(pos.coords.latitude, pos.coords.longitude);
         }, (err) => {
             console.error("Geolocation error:", err);
-            const userLoc = document.getElementById('user-location');
-            if (userLoc) userLoc.textContent = "Location access denied";
+            // Fallback to Mumbai
+            setLocation(19.0760, 72.8777, "Mumbai, India (Fallback)");
         });
     } else {
-        const userLoc = document.getElementById('user-location');
-        if (userLoc) userLoc.textContent = "Geolocation not supported";
+        // Fallback to Mumbai
+        setLocation(19.0760, 72.8777, "Mumbai, India (Fallback)");
     }
 });

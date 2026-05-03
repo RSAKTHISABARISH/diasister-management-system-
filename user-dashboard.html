@@ -239,6 +239,70 @@
                     </div>
                 </div>
             </div>
+
+            <!-- History Tab -->
+            <div id="tab-history" class="tab-content fade-in">
+                <h1>My Alert History</h1>
+                <div class="glass-card" style="padding: 2rem; margin-top: 1.5rem;" id="user-history-list">
+                    <p style="text-align: center; color: var(--text-secondary);">No previous alerts recorded.</p>
+                </div>
+            </div>
+
+            <!-- Weather Tab -->
+            <div id="tab-weather" class="tab-content fade-in">
+                <h1>Local Weather Alerts</h1>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 1.5rem;">
+                    <div class="glass-card" style="padding: 2rem; display: flex; align-items: center; gap: 1.5rem;">
+                        <div style="font-size: 3rem;">⛈️</div>
+                        <div>
+                            <h3>Severe Thunderstorm</h3>
+                            <p style="color: var(--text-secondary);">Expected in your area within 2 hours.</p>
+                        </div>
+                    </div>
+                    <div class="glass-card" style="padding: 2rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <span>Humidity</span>
+                            <span style="font-weight: 700;">78%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <span>Wind Speed</span>
+                            <span style="font-weight: 700;">14 km/h</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Visibility</span>
+                            <span style="font-weight: 700;">8.2 km</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical Tab -->
+            <div id="tab-medical" class="tab-content fade-in">
+                <h1>Emergency Resources</h1>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.5rem;">
+                    <div class="glass-card" style="padding: 1.5rem; text-align: center;">
+                        <div style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--primary);">
+                            <i data-lucide="phone"></i>
+                        </div>
+                        <h4>Ambulance</h4>
+                        <p style="font-weight: 700; font-size: 1.25rem; color: var(--primary); margin-top: 0.5rem;">102</p>
+                    </div>
+                    <div class="glass-card" style="padding: 1.5rem; text-align: center;">
+                        <div style="width: 48px; height: 48px; background: rgba(239, 68, 68, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--danger);">
+                            <i data-lucide="cross"></i>
+                        </div>
+                        <h4>Emergency</h4>
+                        <p style="font-weight: 700; font-size: 1.25rem; color: var(--danger); margin-top: 0.5rem;">108</p>
+                    </div>
+                    <div class="glass-card" style="padding: 1.5rem; text-align: center;">
+                        <div style="width: 48px; height: 48px; background: rgba(34, 197, 94, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--success);">
+                            <i data-lucide="shield-check"></i>
+                        </div>
+                        <h4>Police</h4>
+                        <p style="font-weight: 700; font-size: 1.25rem; color: var(--success); margin-top: 0.5rem;">100</p>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 

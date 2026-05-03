@@ -240,13 +240,111 @@
                 <div class="glass-card" style="flex: 1; overflow: hidden; position: relative;" id="admin-map"></div>
             </div>
 
-            <!-- Other Tabs (Stubs) -->
-            <div id="tab-notifications" class="tab-content fade-in">
-                <h1>Notifications</h1>
-                <div class="glass-card" style="padding: 2rem; margin-top: 1.5rem; text-align: center; color: var(--text-secondary);">System is monitoring global feeds.</div>
+            <!-- Teams Tab -->
+            <div id="tab-teams" class="tab-content fade-in">
+                <h1>Dispatch Teams</h1>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.5rem;">
+                    <div class="glass-card" style="padding: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <span class="badge" style="background: rgba(34, 197, 94, 0.1); color: #22c55e;">Available</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">TEAM ALPHA</span>
+                        </div>
+                        <h3>Mumbai Medical</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">4 Members | 1 Ambulance</p>
+                    </div>
+                    <div class="glass-card" style="padding: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <span class="badge" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">On Mission</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">TEAM BRAVO</span>
+                        </div>
+                        <h3>Delhi Fire Rescue</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">6 Members | 2 Trucks</p>
+                    </div>
+                </div>
             </div>
-            
-            <!-- Add other tabs as needed, skipping for brevity -->
+
+            <!-- History Tab -->
+            <div id="tab-history" class="tab-content fade-in">
+                <h1>Emergency History</h1>
+                <div class="glass-card" style="padding: 2rem; margin-top: 1.5rem;">
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="text-align: left; padding: 1rem; color: var(--text-muted);">DATE</th>
+                                <th style="text-align: left; padding: 1rem; color: var(--text-muted);">USER</th>
+                                <th style="text-align: left; padding: 1rem; color: var(--text-muted);">TYPE</th>
+                                <th style="text-align: left; padding: 1rem; color: var(--text-muted);">STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 1rem;">2026-05-02</td>
+                                <td style="padding: 1rem;">Alice Wong</td>
+                                <td style="padding: 1rem;">Accident</td>
+                                <td style="padding: 1rem;"><span class="badge" style="background: rgba(34, 197, 94, 0.1); color: #22c55e;">Resolved</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Weather Tab -->
+            <div id="tab-weather" class="tab-content fade-in">
+                <h1>National Weather Alerts</h1>
+                <div class="glass-card" style="padding: 2rem; margin-top: 1.5rem;">
+                    <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem;">
+                        <div style="font-size: 4rem;">🌀</div>
+                        <div>
+                            <h2 style="color: var(--primary);">Cyclone Warning: West Coast</h2>
+                            <p style="color: var(--text-secondary);">Expected landfall in 48 hours. High alert for coastal regions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical Tab -->
+            <div id="tab-medical" class="tab-content fade-in">
+                <h1>Hospital Resource Map</h1>
+                <div class="glass-card" style="padding: 2rem; margin-top: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
+                        <div>
+                            <h3>Apollo Hospital - Delhi</h3>
+                            <p style="color: var(--text-secondary);">ICU Beds: 12 Available | Oxygen: Stable</p>
+                        </div>
+                        <div>
+                            <h3>Lilavati Hospital - Mumbai</h3>
+                            <p style="color: var(--text-secondary);">ICU Beds: 4 Available | Oxygen: Critical</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div id="tab-analytics" class="tab-content fade-in">
+                <h1>System Analytics</h1>
+                <div class="glass-card" style="padding: 3rem; margin-top: 1.5rem; text-align: center;">
+                    <div style="width: 100%; height: 200px; background: rgba(59, 130, 246, 0.05); border-radius: 1rem; border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center;">
+                        <p style="color: var(--text-muted);">Real-time chart visualization loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="tab-settings" class="tab-content fade-in">
+                <h1>System Settings</h1>
+                <div class="glass-card" style="padding: 2.5rem; margin-top: 1.5rem; max-width: 600px;">
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem;">Admin Notification Email</label>
+                        <input type="email" class="form-input" value="admin@rescue.com" style="width: 100%;">
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" checked> Auto-dispatch for Critical SOS
+                        </label>
+                    </div>
+                    <button class="btn btn-primary">Save Configuration</button>
+                </div>
+            </div>
 
         </main>
     </div>
