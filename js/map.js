@@ -36,3 +36,37 @@ window.initMap = function(elementId, lat, lng, zoomLevel = 13) {
 
     return map;
 };
+
+window.addMarker = function(map, lat, lng, type, popupText) {
+    if (!map) return;
+    
+    let color = '#3b82f6';
+    let iconHtml = '';
+    
+    if (type === 'hospital') {
+        color = '#ef4444';
+        iconHtml = '<span style="font-size: 16px;">🏥</span>';
+    } else if (type === 'weather') {
+        color = '#f59e0b';
+        iconHtml = '<span style="font-size: 16px;">⚡</span>';
+    } else {
+        color = '#3b82f6';
+        iconHtml = '<span style="font-size: 16px;">📍</span>';
+    }
+
+    const customIcon = L.divIcon({
+        className: 'custom-div-icon',
+        html: `
+            <div style="background: ${color}; width: 30px; height: 30px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                ${iconHtml}
+            </div>
+        `,
+        iconSize: [30, 30],
+        iconAnchor: [15, 30]
+    });
+
+    const marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
+    if (popupText) marker.bindPopup(popupText);
+    
+    return marker;
+};

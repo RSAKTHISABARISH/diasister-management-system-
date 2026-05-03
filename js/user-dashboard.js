@@ -101,6 +101,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.initMap) {
             window.initMap('mini-map', lat, lng, 15);
             window.mainMap = window.initMap('main-map', lat, lng, 13);
+
+            // Add nearby hospitals and weather markers
+            if (window.addMarker) {
+                // Mock hospitals
+                window.addMarker(window.mainMap, lat + 0.004, lng + 0.005, 'hospital', 'General Hospital');
+                window.addMarker(window.mainMap, lat - 0.006, lng - 0.003, 'hospital', 'Saint Mary Emergency');
+                
+                // Mock weather
+                window.addMarker(window.mainMap, lat + 0.01, lng - 0.008, 'weather', 'Heavy Rain Alert');
+            }
         }
     }
 

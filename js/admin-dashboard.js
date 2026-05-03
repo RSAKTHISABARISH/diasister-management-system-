@@ -112,16 +112,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (window.initMap) {
         window.adminMap = window.initMap('admin-map', 20.5937, 78.9629, 5);
-        // Add markers for mock alerts
-        if (window.L) {
-            const markers = [
-                { lat: 19.0760, lng: 72.8777, title: "John Doe - Critical" },
-                { lat: 28.6139, lng: 77.2090, title: "Jane Smith - Active" },
-                { lat: 12.9716, lng: 77.5946, title: "Rahul Kumar - Pending" }
-            ];
-            markers.forEach(m => {
-                L.marker([m.lat, m.lng]).addTo(window.adminMap).bindPopup(m.title);
-            });
+        
+        if (window.addMarker) {
+            // Alert Markers
+            window.addMarker(window.adminMap, 19.0760, 72.8777, 'user', 'John Doe - Critical Alert');
+            window.addMarker(window.adminMap, 28.6139, 77.2090, 'user', 'Jane Smith - Active Alert');
+            window.addMarker(window.adminMap, 12.9716, 77.5946, 'user', 'Rahul Kumar - Pending Alert');
+
+            // Regional Hospitals
+            window.addMarker(window.adminMap, 19.1000, 72.9000, 'hospital', 'Mumbai Specialty Hospital');
+            window.addMarker(window.adminMap, 28.6500, 77.2300, 'hospital', 'Delhi Central Medical');
+
+            // Regional Weather Alerts
+            window.addMarker(window.adminMap, 15.2993, 74.1240, 'weather', 'Cyclone Warning: Goa Coast');
         }
     }
 
