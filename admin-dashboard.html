@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RescueGuard - Command Center</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+            background: var(--bg-primary);
+            position: relative;
+        }
+        
+        .sidebar {
+            width: 80px;
+            background: var(--bg-accent);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 0 0;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 4px 0 24px rgba(0,0,0,0.12);
+            border-right: 1px solid var(--border);
+        }
+
+        .nav-items {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            overflow-y: auto;
+            padding: 0 0.5rem;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .nav-btn {
+            width: 48px;
+            height: 48px;
+            min-height: 48px;
+            border-radius: 0.75rem;
+            border: none;
+            background: transparent;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-btn.active {
+            background: rgba(57, 131, 246, 0.12);
+            color: #3b82f6;
+        }
+
+        .nav-btn.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 3px;
+            height: 24px;
+            background: #3b82f6;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+        
+        main {
+            flex: 1;
+            padding: 2rem 3rem;
+            overflow-y: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Animated Background -->
+        <div class="grid-overlay"></div>
+        <div class="page-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+            <div class="orb orb-4"></div>
+        </div>
+        <div id="particles-container"></div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div style="margin-bottom: 1.5rem; flex-shrink: 0;">
+                <div style="background: rgba(57, 131, 246, 0.1); padding: 0.75rem; border-radius: 1rem; color: #3b82f6; box-shadow: 0 0 18px rgba(59, 130, 246, 0.22);">
+                    <i data-lucide="shield" width="28" height="28"></i>
+                </div>
+            </div>
+            
+            <nav class="nav-items" id="sidebar-nav">
+                <!-- Admin Nav Items -->
+                <button class="nav-btn active" data-target="overview" title="Overview"><i data-lucide="layout-grid" width="22" height="22"></i></button>
+                <button class="nav-btn" data-target="map" title="Live Map"><i data-lucide="map" width="22" height="22"></i></button>
+                <button class="nav-btn" data-target="notifications" title="Notifications"><i data-lucide="bell" width="22" height="22"></i></button>
+                <button class="nav-btn" data-target="teams" title="Dispatchers"><i data-lucide="users" width="22" height="22"></i></button>
+                <button class="nav-btn" data-target="history" title="Alert History"><i data-lucide="history" width="22" height="22"></i></button>
+                <button class="nav-btn" data-target="weather" title="Weather Alerts"><i data-lucide="cloud-lightning" width="22" height="22"></i></button>
+                <button class="nav-btn" data-target="medical" title="Emergency Resources"><i data-lucide="ambulance" width="22" height="22"></i></button>
+                <button class="nav-btn" data-target="analytics" title="Analytics"><i data-lucide="bar-chart-3" width="22" height="22"></i></button>
+                <button class="nav-btn" data-target="settings" title="Settings"><i data-lucide="settings" width="22" height="22"></i></button>
+            </nav>
+
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding-top: 0.75rem; padding-bottom: 0.75rem; flex-shrink: 0; width: 100%; border-top: 1px solid var(--border);">
+                <button id="logout-btn" title="Logout" style="width: 40px; height: 40px; border-radius: 0.75rem; border: none; background: rgba(239, 68, 68, 0.1); color: #ef4444; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease;">
+                    <i data-lucide="log-out" width="20" height="20"></i>
+                </button>
+                <div class="ssk-logo-sidebar">
+                    <img src="assets/hero.png" alt="SSK" />
+                    <span class="ssk-badge">SSK</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Overview Tab -->
+            <div id="tab-overview" class="tab-content active fade-in">
+                <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div>
+                        <h1 style="font-size: 1.75rem;">Command Center</h1>
+                        <p style="color: var(--text-secondary);">Monitoring active emergencies.</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <button class="btn btn-primary" style="padding: 0.6rem 1.25rem; background: var(--primary);" id="broadcast-btn">
+                            <i data-lucide="send" width="18" height="18" style="margin-right: 0.5rem;"></i> Emergency Broadcast
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Stats Cards -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="glass-card" style="padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; border: none; background: var(--bg-accent);">
+                        <div style="width: 56px; height: 56px; border-radius: 1.2rem; background: rgba(59, 130, 246, 0.15); display: flex; align-items: center; justify-content: center; color: #3b82f6;">
+                            <i data-lucide="layers" width="28" height="28"></i>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Total Emergencies</p>
+                            <h2 style="font-size: 1.75rem; font-weight: 900;" id="stat-total">0</h2>
+                        </div>
+                    </div>
+                    <div class="glass-card" style="padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; border: none; background: var(--bg-accent);">
+                        <div style="width: 56px; height: 56px; border-radius: 1.2rem; background: rgba(239, 68, 68, 0.15); display: flex; align-items: center; justify-content: center; color: #ef4444;">
+                            <i data-lucide="alert-circle" width="28" height="28"></i>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Unresolved SOS</p>
+                            <h2 style="font-size: 1.75rem; font-weight: 900;" id="stat-active">0</h2>
+                        </div>
+                    </div>
+                    <!-- Other stats omitted for brevity but logic is similar -->
+                </div>
+
+                <div style="display: flex; gap: 1.5rem;">
+                    <!-- Main Table -->
+                    <div class="glass-card" style="flex: 2; padding: 1.5rem; overflow: hidden;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h3>Emergency Requests</h3>
+                        </div>
+
+                        <div style="overflow-x: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="font-size: 0.85rem; color: var(--text-muted);">USER</th>
+                                        <th style="font-size: 0.85rem; color: var(--text-muted);">STATUS</th>
+                                        <th style="font-size: 0.85rem; color: var(--text-muted);">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="alerts-table-body">
+                                    <tr>
+                                        <td colspan="3" style="padding: 3rem; text-align: center; color: var(--text-muted);">No emergency alerts found.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Details Panel -->
+                    <div style="flex: 1;" id="alert-details-panel">
+                        <div class="glass-card" style="padding: 3rem; text-align: center; color: var(--text-muted);">
+                            <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--bg-accent); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                                <i data-lucide="search" width="32" height="32"></i>
+                            </div>
+                            <p>Select an alert to view details and manage response.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map Tab -->
+            <div id="tab-map" class="tab-content fade-in" style="height: calc(100vh - 4rem); display: flex; flex-direction: column;">
+                <h1 style="margin-bottom: 1.5rem;">Live Emergency Map</h1>
+                <div class="glass-card" style="flex: 1; overflow: hidden; position: relative;" id="admin-map"></div>
+            </div>
+
+            <!-- Other Tabs (Stubs) -->
+            <div id="tab-notifications" class="tab-content fade-in">
+                <h1>Notifications</h1>
+                <div class="glass-card" style="padding: 2rem; margin-top: 1.5rem; text-align: center; color: var(--text-secondary);">System is monitoring global feeds.</div>
+            </div>
+            
+            <!-- Add other tabs as needed, skipping for brevity -->
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RescueGuard - Login</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Animated Background -->
+        <div class="grid-overlay"></div>
+        <div class="page-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+            <div class="orb orb-4"></div>
+        </div>
+        <div id="particles-container"></div>
+
+        <!-- Login Card -->
+        <div class="glass-card login-card">
+            <!-- Decorative circles -->
+            <div style="position: absolute; top: -60px; right: -60px; width: 180px; height: 180px; background: var(--primary); opacity: 0.07; border-radius: 50%; z-index: 0;"></div>
+            <div style="position: absolute; bottom: -40px; left: -40px; width: 120px; height: 120px; background: var(--secondary); opacity: 0.06; border-radius: 50%; z-index: 0;"></div>
+
+            <!-- Header -->
+            <div style="text-align: center; margin-bottom: 2rem; position: relative; z-index: 1;">
+                <div class="login-icon-bg">
+                    <i data-lucide="activity" color="white" width="34" height="34"></i>
+                </div>
+                <h1 style="font-size: 2rem; margin-bottom: 0.25rem; color: var(--text-primary); font-weight: 800;">
+                    RescueGuard
+                </h1>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Emergency Intelligence Network</p>
+            </div>
+
+            <!-- Role Switcher -->
+            <div id="role-switcher" class="role-switcher">
+                <button class="role-btn active" data-role="user">User Portal</button>
+                <button class="role-btn" data-role="admin">Command Hub</button>
+            </div>
+
+            <form id="login-form" style="position: relative; z-index: 1;">
+                <div id="error-message" style="display: none; padding: 0.75rem; background: rgba(239,68,68,0.1); color: var(--primary); border-radius: 0.5rem; font-size: 0.85rem; margin-bottom: 1rem; text-align: center; font-weight: 600; border: 1px solid rgba(239,68,68,0.2);"></div>
+
+                <!-- Registration Fields -->
+                <div id="register-fields" style="display: none; margin-bottom: 1.25rem;">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <div class="input-icon-wrapper">
+                            <span class="input-icon"><i data-lucide="user" width="18" height="18"></i></span>
+                            <input type="text" id="name" class="form-input" placeholder="Jane Doe">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email / Admin ID -->
+                <div class="input-group">
+                    <label id="email-label">Email Address</label>
+                    <div class="input-icon-wrapper">
+                        <span class="input-icon"><i id="email-icon" data-lucide="mail" width="18" height="18"></i></span>
+                        <input type="text" id="email" required class="form-input" placeholder="jane@example.com">
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="input-group" style="margin-bottom: 2rem;">
+                    <label>Password</label>
+                    <div class="input-icon-wrapper">
+                        <span class="input-icon"><i data-lucide="lock" width="18" height="18"></i></span>
+                        <input type="password" id="password" required class="form-input" placeholder="••••••••">
+                        <button type="button" id="toggle-password" style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0.5rem; transition: color 0.2s;">
+                            <i id="password-icon" data-lucide="eye" width="18" height="18"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" id="submit-btn" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 1rem; font-size: 1rem;">
+                    <span id="submit-text">Secure Sign In</span>
+                    <i data-lucide="arrow-right" width="20" height="20" style="margin-left: 0.5rem;"></i>
+                </button>
+            </form>
+
+            <!-- Toggle register/login -->
+            <div style="margin-top: 1.5rem; text-align: center; position: relative; z-index: 1;">
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                    <span id="toggle-text">Don't have an account?</span>
+                    <button id="toggle-auth-mode" style="background: transparent; border: none; color: var(--primary); font-weight: 700; margin-left: 0.5rem; cursor: pointer; font-family: inherit;">
+                        Sign Up
+                    </button>
+                </p>
+            </div>
+
+            <!-- Quick credentials hint -->
+            <div id="quick-hint" style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-accent); border-radius: 1rem; text-align: center; font-size: 0.8rem; color: var(--text-muted);">
+                <p style="font-weight: 600; color: var(--text-secondary); margin-bottom: 0.25rem;">QUICK OVERRIDE</p>
+                <p>Admin: admin@rescue.com / admin123</p>
+            </div>
+
+            <!-- SSK Logo -->
+            <div style="margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; z-index: 1;">
+                <div style="width: 100%; height: 1px; background: var(--border); margin-bottom: 0.75rem;"></div>
+                <img src="assets/hero.png" alt="SSK" style="width: 72px; height: auto; object-fit: contain; filter: drop-shadow(0 0 8px rgba(59,130,246,0.5)); border-radius: 8px;">
+                <p style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase;">
+                    Powered by SSK
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
