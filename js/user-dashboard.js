@@ -95,15 +95,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const lat = pos.coords.latitude;
             const lng = pos.coords.longitude;
             
-            document.getElementById('lat-display').textContent = lat.toFixed(6);
-            document.getElementById('lng-display').textContent = lng.toFixed(6);
-            document.getElementById('user-location').textContent = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+            if (document.getElementById('lat-display')) document.getElementById('lat-display').textContent = lat.toFixed(6);
+            if (document.getElementById('lng-display')) document.getElementById('lng-display').textContent = lng.toFixed(6);
+            if (document.getElementById('user-location')) document.getElementById('user-location').textContent = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
 
             // Init mini map
             if (window.initMap) {
                 window.initMap('mini-map', lat, lng, 15);
                 window.mainMap = window.initMap('main-map', lat, lng, 13);
             }
+        }, (err) => {
+            console.error("Geolocation error:", err);
+            const userLoc = document.getElementById('user-location');
+            if (userLoc) userLoc.textContent = "Location access denied";
         });
+    } else {
+        const userLoc = document.getElementById('user-location');
+        if (userLoc) userLoc.textContent = "Geolocation not supported";
     }
 });
